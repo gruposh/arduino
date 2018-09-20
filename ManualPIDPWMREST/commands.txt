@@ -1,0 +1,37 @@
+URL 	Description 	LM 	HM
+/lm/ 	Main index or LinkMeter "home" page. Displays current temperature and fan status with graph.
+
+    rrd=file use file from stashpath instead of live
+
+	Y 	N
+/lm/hmstatus 	Get last HeaterMeter status update in JSON format. 	Y 	N
+/lm/rfstatus 	Get last RF12 status update in JSON format. 	Y 	N
+/lm/stream 	Get streaming HeaterMeter status updates in HTTP server-sent events format. The individual events are in JSON format. 	Y 	N
+/lm/conf 	Retrieve HeaterMeter configuration in JSON format. 	Y 	N
+/lm/hist 	Get HeaterMeter history in CSV format, which is used to generate the graph.
+
+    rrd=X use X for the database file instead of the default (may include full path)
+    nancnt=X specifies the range of the returned data. Values are subject to change but: Not Present=auto 460=1h 360=6h 240=12h else 24h
+
+	Y 	N
+/lm/light 	A lightweight, mobile friendly "home" page. Displays current temperature, fan speed and set point. 	Y 	N
+/lm/login 	Bounce to the LinkMeter login page for authentication. 	Y 	N
+/admin/lm/set 	Passed through to HeaterMeter one parameter at a time. See HeaterMeter Set Parameter list. 	A 	Y
+/admin/lm/conf 	LinkMeter probe and behavior configuration. Front-end to /lm/set 	A 	N
+/admin/lm/home 	The authenticated version of the home page, which allows modification of setpoint, probe names, etc. 	A 	N
+/admin/lm/stashdb 	LinkMeter utility URL for managing databases
+
+    backup=1 backup to stashpath
+    restore=1 restore to active
+    reset=1 reset active
+    rrd=file use file instead of 'hm.rrd' for stashpath file (do not include path)
+    delete=1 delete stashpath file and any metadata
+
+	A 	N
+/admin/lm/reboot 	Passthrough AVR reboot command 	A 	N
+/admin/lm/alarms 	LinkMeter simple alarm script editor 	A 	N
+/admin/lm/archive 	LinkMeter database archive. Front-end to /admin/lm/stashdb 	A 	N
+/admin/lm/fw 	LinkMeter Arduino / AVR firmware upgrade 	A 	N
+/admin/lm/credits 	LinkMeter software credits page 	A 	N
+/reboot 	HeaterMeter software reboot 	N 	Y
+/config 	HeaterMeter dump configuration 	N 	Y

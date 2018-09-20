@@ -1,0 +1,52 @@
+{
+  "ip": "47.198.193.115",
+  "total": {
+    "all": 2006,
+    "week": 244,
+    "month": 628
+  },
+  "devices": [
+    {
+      "device_id": "1952",
+      "model": "BCM2835",
+      "revision": "000e",
+      "serial": "0000000091752c9f",
+      "hostname": "BencHM",
+      "seen": "1498592611",
+      "uptime": "54",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "addr": "192.168.200.1",
+          "packets": "0"
+        },
+        {
+          "name": "wlan0",
+          "addr": "192.168.2.16",
+          "packets": "44"
+        }
+      ]
+    },
+    {
+      "device_id": "1746",
+      "model": "BCM2835",
+      "revision": "0010",
+      "serial": "0000000078c7f575",
+      "hostname": "BencHM",
+      "seen": "1498670612",
+      "uptime": "55",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "addr": "192.168.200.1",
+          "packets": "0"
+        },
+        {
+          "name": "wlan0",
+          "addr": "192.168.2.16",
+          "packets": "59"
+        }
+      ]
+    }
+  ]
+}
