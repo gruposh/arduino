@@ -2,20 +2,24 @@
 
 /************************ Example Starts Here *******************************/
 
+// https://www.hackster.io/amal-ns/hall-effect-sensor-with-arduino-390916
+
 // this int will hold the current count for our sketch
 int count = 0;
 
 // set up the 'house' feed
 AdafruitIO_Feed *house = io.feed("homeless");
 
-/************************ LIGHT ALARM ***************************************/
-int photocellReading = 0;     // the analog reading from the sensor divider
+/************************ DOOR ALARM ***************************************/
+int doorReading = 0;     // the analog reading from the sensor divider
 int lightMinValue = 15;
 String alarmMessage;
 
 volatile bool notificationSent = true;
 
 void setup() {
+  pinMode(INTERRUPT_PIN, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), AlarmStatus, CHANGE);
 
   // start the serial connection
   Serial.begin(115200);
@@ -46,8 +50,8 @@ void setup() {
   Serial.println();
   Serial.println(io.statusText());
 
-  Serial.println(String(ALARM_NAME) + " LIGHT Alarm is READY");
-  house->save(String(ALARM_NAME) + " LIGHT Alarm is READY");
+  Serial.println(String(ALARM_NAME) + " DOOR Alarm is READY");
+  house->save(String(ALARM_NAME) + " DOOR Alarm is READY");
   digitalWrite(BUILTIN_LED, HIGH);
 
 }
@@ -55,8 +59,6 @@ void setup() {
 void loop() {
 
   io.run();
-
-  AlarmStatus();
   // wait one second (1000 milliseconds == 1 second)
   delay(CYCLE_INTERVAL * 1000);
 
@@ -68,37 +70,25 @@ void loop() {
 void handleMessage(AdafruitIO_Data *data) {
 
   if (!strcmp((char*) data->value(), "HEALTHCHECK")) {
-    Serial.println("HEALTHCHECK: Light Alarm is ACTIVE");
-    house->save(String("HEALTHCHECK: Light Alarm is ACTIVE, photocellReading=") + photocellReading);
+    Serial.println("HEALTHCHECK: Door Alarm is ACTIVE");
+    house->save(String("HEALTHCHECK: Door Alarm is ACTIVE"));
+    house->save(String("HEALTHCHECK: Door is") + getStatus());
   }
 
 }
 
-void setAlarmStatusFalse()
-{
-  Serial.println("High");
-  notificationSent = false;
-}
-
-void SendNotification(int value)
-{
-  Serial.print("NotificationSent= ");
-  Serial.println(value);
-  alarmMessage = String(ALARM_NAME) + ": " + value;
-  
-  house->save(alarmMessage);
-  delay(1000);
+String getStatus() {
+  return (digitalRead(INTERRUPT_PIN) == 1)?String(": OPEN"):String(": CLOSE");
 }
 
 void AlarmStatus()
 {
-  photocellReading = analogRead(PHOTOCELL_PIN);
+//  doorReading = digitalRead(INTERRUPT_PIN);
+//
+//  Serial.print("Analog reading = ");
+//  Serial.println(doorReading);
 
-  Serial.print("Analog reading = ");
-  Serial.println(photocellReading);
-  
-  if (photocellReading >= lightMinValue) {  
-    SendNotification(photocellReading);
-  }
+  house->save(String(ALARM_NAME) + getStatus());
+  Serial.println(String(ALARM_NAME) + getStatus());
 }
 

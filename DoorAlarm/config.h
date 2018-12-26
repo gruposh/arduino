@@ -15,6 +15,8 @@
 
 #define WIFI_SSID       "bfwx"
 #define WIFI_PASS       "60724293d849"
+//
+
 
 // comment out the following two lines if you are using fona or ethernet
 #include "AdafruitIO_WiFi.h"
@@ -42,9 +44,10 @@ AdafruitIO_WiFi io(IO_USERNAME, IO_KEY, WIFI_SSID, WIFI_PASS);
 // #include "AdafruitIO_Ethernet.h"
 // AdafruitIO_Ethernet io(IO_USERNAME, IO_KEY);
 
-/**************************** LIGHT ALARM ***********************************/
-#define ALARM_NAME "LIGHT_ALARM"
-#define PHOTOCELL_PIN A0
+/**************************** DOOR ALARM ***********************************/
+#define ALARM_NAME "DOOR_ALARM"
+//TEST 0 and 13 PINS
+#define INTERRUPT_PIN 0
 #define CYCLE_INTERVAL 1
 
 
